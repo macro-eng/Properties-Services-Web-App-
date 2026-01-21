@@ -19,19 +19,19 @@
 
 ## 🖼️ صور من الواجهة
 ## Tanant Landing Page
-![Property Form](screenshots/tanantlandingpage.png)
+![Property Form](./screenshots/tanantlandingpage.png)
 
 ### 🎯  Admin قائمة العقارات الخاص ب :
 
-![Property Form](screenshots/property-listing(5).png)
+![Property Form](./screenshots/property-listing(5).png)
 
-![Property List](screenshots/property-listing(6).png)
+![Property List](./screenshots/property-listing(6).png)
 
 ### 📍 تحديد الموقع على الخريطة:
 
-![Map Picker](screenshots/map-picker.png)
+![Map Picker](./screenshots/map-picker.png)
 ## responsive  for phones
-![Map Picker](screenshots/property-listing.png)
+![Map Picker](./screenshots/property-listing.png)
 
 ---
 ---
