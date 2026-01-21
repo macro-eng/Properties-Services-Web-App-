@@ -7,22 +7,22 @@ use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Exceptions\InvalidCredenailsException;
 class AuthService{
-   public function login(string $email,string $password):array{
+   public function login(string $email,string $password){
       
-      // try{
+      try{
          $user = User::where("email",$email)->first();
-        if (! $user || ! Hash::check($password, $user->password)) {
+        if (! $user || ! Hash::check($password,$user->password)) {
             throw new InvalidCredenailsException();
           }
           $token = $user->createToken("api_token")->plainTextToken;
           return [
             "token"=>$token,
             "role"=>$user->role,
-            "email"=>$user->email,
+            "user"=>$user,
           ];
-      // }catch(\Throwable $e){
-      //     throw new InvalidCredenailsException();
-      // }
+      }catch(\Throwable $e){
+          throw new InvalidCredenailsException();
+      }
     }
     public function register(array $data,UploadedFile $userlogo=null):User{
       

@@ -15,15 +15,19 @@ class AuthController extends Controller
     public function __construct(AuthService $authServices){
          $this->authService = $authServices;
     }
-    public function login(Request $request):JsonResponse{
+    public function login(Request $request){
         // try{
-            $user = $this->authService->login($request->email,$request->password);
+             $data=$request->validate([
+                'email'=>'required|email',
+                'password'=>'required|string',
+             ]);
+            $user = $this->authService->login($data['email'],$data['password']);
             return self::success(
                 message:"تم تسجيل الدخول بنجاح",
                 data:[
                     "token"=>$user["token"],
                     "role"=>$user["role"],
-                    "user"=>$user["email"]
+                    "user"=>$user["user"]
                 ],
                 code:201,
 
