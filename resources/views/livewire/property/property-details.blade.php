@@ -10,11 +10,11 @@
 
 
 @section('content')
-   <div class="max-w-6xl mx-auto p-6">
-        <div class="w-78 h-72 rounded-full overflow-hidden shadow">
+   <div class="max-w-6xl mx-auto ">
+        <div class="w-72 h-72 px-6 overflow-hidden shadow">
             <img src="{{ asset('storage/'.$property->primary_path)}}"  
             id="mainImage"
-            class="w-78 h-78 rounded-xl object-cover transition duration-300 " />
+            class="w-full h-full rounded-full object-cover transition duration-300 " />
 
         </div>
 
@@ -47,44 +47,40 @@
           </button>
       </div>
                 
-      <div class="text-2xl font-semibold text-gray-600">
-        <i class="fas fa-money-bill-wave"></i>
-        {{ $property->price }} ريال
-    </div>
+     
     <div class="bg-white p-4 rounded shadow-lg">
         <h2 class="text-lg font-semibold mb-2">
             <i class="fas fa-align-left"></i>الوصف :
         </h2>
         <p>{{ $property->description }}</p>
     </div>
-      <div class="flex flex-row gap-4 px-3  justify-around lg:justify-center mt-4">
-      <div class="flex flex-col sm:flex-row justify-between items-end sm:items-center gap-4">
-          
-     
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+    <div class="flex flex-row gap-3 mb-4 px-4 mt-4 justify-around">
+
+        <div class="bg-white rounded shadow-lg font-semibold text-gray-600">
+           <i class="fas fa-money-bill-wave"></i>
+              {{ $m }} 
+       </div>
+
+        <div class="bg-white flex flex-row  rounded shadow-lg">
+                   <i class="fas fa-location-dot text-blue-400 text-xl"></i>
+                    <p class=" px-2 text-gray-600 text-sm text-center">{{ $property->street->district->city->name }}-{{ $property->street->district->name }}-{{ $property->street->title }} </p>
+        </div>
+    </div>
+    <div class="flex flex-row gap-4 px-3 md:flex-cols lg:justify-center mt-4">
+        
+        
+        {{-- <div class="grid grid-cols-2 md:grid-cols-4 gap-4"> --}}
             <div class="bg-white text-center shadow rounded p-3">
                 <i class="fas fa-bed text-blue-400 text-xl"></i>
                 <div class="text-gray-500 text-sm mt-1">عداد الغرف</div>
                 <div class="text-lg font-bold">5</div>
             </div>
-            <div class="bg-white text-center shadow rounded p-3">
-                <i class="fas fa-tags text-blue-400 text-xl"></i>
-                <div class="text-gray-500 text-sm mt-1"> الحالة</div>
-                <div class="text-lg font-bold">{{ $property->status }}</div>
-            </div>
-            <div class="bg-white text-center shadow rounded p-3">
-                <i class="fas fa-location-dot text-blue-400 text-xl"></i>
-                <div class="text-gray-500 text-sm mt-1"> المدينة</div>
-                <div class="text-lg font-bold">صنعاء</div>
-            </div>
-        </div>
+         
         
-      </div>
+   
 
 
-        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
 
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div class="bg-white text-center shadow rounded p-3">
                     <i class="fas fa-bed text-blue-400 text-xl"></i>
                     <div class="text-gray-500 text-sm mt-1"> معروض ل</div>
@@ -103,22 +99,23 @@
                     <div class="text-gray-500 text-sm mt-1">الطول x العرض</div>
                     <div class="text-lg font-bold">{{ $property->area_2m }}</div>
                 </div>
-            </div>
             
-        </div>
     </div>
         <div class="bg-white shadow ">
             <h2 class="text-lg font-semibold mt-6 text-center pt-2 mb-2 text-gray-700" >
                 <i class="fas fa-map-marked-alt"></i>
                 الموقع على الخريطة
             </h2>
-            <div style="height: 400px;" id="map" class="w-full rounded-lg shadow"></div>
 
+            <x-map-picker :lat="$property->altitude" :lng="$property->longitude" :editable="false" />
         </div>
     </div>
     <div class="flex flex-row justify-around bg-white py-4">
         <button class="px-6 py-3 bg-gray-300 rounded-lg hover:bg-blue-700">
             التواصل مع المالك
+        </button>
+         <button class="px-6 py-3 bg-yellow-200 rounded-lg hover:bg-blue-700">
+           <a href="/property/card">حجز العقار</a> 
         </button>
         <button class="px-6 py-3 bg-gray-300 rounded-lg hover:bg-blue-700">
             واتساب
@@ -149,14 +146,7 @@
            img.classList.remove("border-transparent");
            img.classList.add("border-bg-blue-500");
           }
-           document.addEventListener("DOMContentLoaded",function(){
-            var map = L.map('map').setView([15.3694, 44.1910], 30);
-             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-             attribution:'$copy; OpenStreetMap contributors'}).addTo(map);
-             L.marker([15.3694, 44.1910]).addTo(map)
-             .bindPopup("فيلا فاخرة في صنعاء")
-             .openPopup();
-           })
+      
    </script>
 
    @endpush

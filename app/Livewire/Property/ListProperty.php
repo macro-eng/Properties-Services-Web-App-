@@ -17,8 +17,7 @@ class ListProperty extends Component
     // $cities=City::get();
 
     // $properties = Property::get();
-    
-
+ 
         return view('livewire.property.list-property');
         // ->layout("layouts.app",["title"=>"List"]);
     }

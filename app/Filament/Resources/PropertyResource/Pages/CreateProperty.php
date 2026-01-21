@@ -15,6 +15,7 @@ use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\View;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\ViewField;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\{TextInput,Group,Tabs};
 use Filament\Forms;
 use App\Filament\Resources\PropertyResource;
@@ -48,13 +49,16 @@ class CreateProperty extends CreateRecord
                 ->required(),
                 Select::make("street_id")->relationship("street","title")
                 ->label("اسم الشارع")
-                ->required(),
+                ->required()
+                ->native(false),
+      
                 Select::make("type")
                 ->options([
                     "apartment"=>"شقة",
                      "villa"=>"فيلا",
                      "room"=>"غرفة",
                 ])
+                ->native(false)
                 ->label("نوع العقار"),
 
                 Select::make("purpose")
@@ -62,25 +66,27 @@ class CreateProperty extends CreateRecord
                     "selling"=>"بيع",
                     "renting"=>"ايجار",
                 ])
-                ->label("الغرض"),
+                ->label("الغرض")
+                ->native(false),
+
                 TextInput::make("area_2m")
                 ->label("مربع(مترxمتر) حجم العقار "),
-                // Toggle::make("is_verified")
-                // ->label("تم التوثيق"),
-                TextInput::make("description")
-                ->required(),
+                
                 Select::make("status")
                 ->options([
                 "available"=>"متاح",
                 "pendding"=>"قيد المعالجة",
-                "booked"=>"محجوز",
-            ]),
+                "sold"=>"تم البيع",
+                "rented"=>"تم تم التاجير",
+            ])
+            ->label("الحالة")
+            ->native(false),
             TextInput::make("price")
             ->label("مبلغ")
             ->required(),
             
             Toggle::make("negotiable")
-            ->label("قابل لتفاوض"),
+            ->label(" قابل لتفاوض"),
 
                FileUpload::make("primary_path")
                ->image()
@@ -89,8 +95,8 @@ class CreateProperty extends CreateRecord
                ->preserveFilenames()
                ->reorderable()
                ->live()
-               ->required()
-               ->acceptedFileTypes(['image/jpeg','image/png','image/jpg','image/webp']),
+               ->required(),
+            //    ->acceptedFileTypes(['image/jpeg','image/png','image/jpg','image/webp']),
             
             Hidden::make("altitude")
             ->dehydrated(true),
@@ -105,9 +111,15 @@ class CreateProperty extends CreateRecord
             // ->extraAttributes([
             //     'data-lat-field'=>'altitude',
             //     'data-lng-field'=>'longitude',
+
+            Toggle::make("is_verified")
+                ->label("تم التوثيق"),
+            // RichEditor::make("description")
+            //     ->required()
+            //     ->label("الوصف"),
         ]),
         Step::make("تفاصيل العقار")
-        ->description("must enter accurate data about the properties")
+        ->description(" يجب ادخال معلومات العقار بتفاصيل \n (شقة , مبنئ ,عمارة,فيلا, غرفة)ودقة" )
         ->schema([
             Fieldset::make("apartment")
             ->relationship(
@@ -170,14 +182,14 @@ class CreateProperty extends CreateRecord
 
         ]),
         Step::make("صور العقار")
-        ->description("يجب ان تكون الصور  واضحة ل العقار الحد الاقصى 6")
+        ->description("يجب ان تكون الصور  واضحة ل العقار الحد الاقصى 6 صور")
         ->schema([
 
             FileUpload::make("path")
                         ->image()
                         ->multiple()
                         ->label("الصوار")
-                        ->directory("detials_photos")
+                        ->directory("followed_images")
                         ->preserveFilenames()
                         ->reorderable()
                         ->live()

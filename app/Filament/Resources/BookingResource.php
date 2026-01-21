@@ -18,9 +18,13 @@ class BookingResource extends Resource
 {
     protected static ?string $model = Booking::class;
     protected static ?string $modelLabel=' الحجوزات';
+    protected static ?string $navigationLabel="الحجوزات";
     protected static ?int $navigationSort =3;
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static ?string $navigationIcon = 'heroicon-m-globe-alt';
     protected static ?string $activeNavigationIcon = 'heroicon-o-lock-open';
+    //  public static function getNavigationBadge():string{
+    //     return static::getModel()::count();
+    // }
     public static function form(Form $form): Form
     {
         return $form

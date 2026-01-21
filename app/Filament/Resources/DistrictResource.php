@@ -17,11 +17,14 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class DistrictResource extends Resource
 {
     protected static ?string $model = District::class;
-
+    protected static ?string $navigationLabel = 'المديريات';
+    // protected static ?string $navigationGroup = 'المواقع&المدن';
+     
+    // protected static bool $shouldRegisterNavigation=false;
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    public static function getNavigationBadge():?string{
-        return static::getModel()::count();
-    }
+    // public static function getNavigationBadge():?string{
+    //     return static::getModel()::count();
+    // }
     public static function form(Form $form): Form
     {
         return $form

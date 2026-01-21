@@ -14,12 +14,9 @@ class AppServiceProvider extends ServiceProvider
     {
         //
     }
-
-    /**
-     * Bootstrap any application services.
-     */
     public function boot(): void
     {
+        app()->setLocale(session('locale',config("app.locale")));
         Model::unguard();
 
     }

@@ -362,20 +362,7 @@
                             <input type="file" wire:model="primary_path" />
                           
                         </div>
-                        <div class="col-span-6 sm:col-span">
-                            @if($photos)
-                                   Photo Preview :
-                                   <div class="flex flex-row justify-start ">
-                                       @foreach($photos as $photo)
-                                            <img src="{{ $photo->temporaryUrl() }}" width="150">
-                                        @endforeach
-                                    </div>
-                            @endif
-                            <input type="file" wire:model="photos" multiple />
-                            @error("photos.*")
-                            <span>{{$message}}</span>
-                            @enderror
-                        </div>
+                    
                       
                         <div class="col-span-6 sm:col-span-4">
                             <x-label for="price" value="{{ __('الوصف') }}" />

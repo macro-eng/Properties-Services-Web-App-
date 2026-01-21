@@ -10,6 +10,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\ViewField;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\View;
@@ -31,17 +32,39 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Forms\Components\Wizard;
-// use illuminate\Database\Eloquent\Model;
 use App\Models\Img;
-class PropertyResource extends Resource
+class PropertyResource extends Resource 
 {
     protected static ?string $model = Property::class;
+    protected static ?string $recordTitleAttribute = 'name';
+    protected static int $globalSearchResultsLimit = 5;
+    // protected static ?string $navigationGroup="العقارات";
     protected static ?string $navigationLabel="العقارات";
     protected static ?string $modelLabel="العقارات";
     protected static ?string $navigationIcon = 'heroicon-o-building-library';
-    public static function getNavigationBadge():string{
-        return static::getModel()::count();
+    // public static function getPermissionPrefixes():array{
+    //     return [
+    //         'view',
+    //     ];
+    // }
+    public static function getGloballySearchableAttributes():array{
+        return ['name','type','street.title','description'];
     }
+    public static function getGlobalSearchResultDetails(Model $record):array{
+        return [
+            'شارع'=>$record->street->title,
+            'الفائة'=>$record->type,
+        ];
+    }
+    // public static function getGlobalSearchEloquentQuery():Builder{
+    //      return parent::getGlobalSearchEloquentQuery()->with(["street",'type']);
+    // }
+
+
+
+    // public static function getNavigationBadge():string{
+    //     return static::getModel()::count();
+    // }
     public static function form(Form $form): Form
     {
         
@@ -77,8 +100,9 @@ class PropertyResource extends Resource
                 ->label("مربع(مترxمتر) حجم العقار "),
                 // Toggle::make("is_verified")
                 // ->label("تم التوثيق"),
-                TextInput::make("description")
-                ->required(),
+                RichEditor::make("description")
+                ->required()
+                ->label("الوصف"),
                 Select::make("status")
                 ->options([
                 "available"=>"متاح",

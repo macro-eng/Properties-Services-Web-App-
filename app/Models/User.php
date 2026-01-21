@@ -9,9 +9,11 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
-
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Models\Contracts\HasAvatar;
+use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable
-{
+{   use HasRoles;
     use HasApiTokens;
 
     /** @use HasFactory<\Database\Factories\UserFactory> */
@@ -28,7 +30,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'password',
+        'role',
     ];
 
     /**
@@ -36,6 +38,9 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    // public function getFilamentAvatarUrl():?string{
+    //     return $this->profile_photo_url;
+    // }
     protected $hidden = [
         'password',
         'remember_token',
@@ -67,4 +72,5 @@ class User extends Authenticatable
     public function property(){
         return $this->hasMany(Property::class);
     }
+    
 }

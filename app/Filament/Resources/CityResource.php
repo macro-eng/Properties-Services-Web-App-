@@ -15,9 +15,11 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class CityResource extends Resource
 {
-    protected static ?string $model = City::class;
-    protected static ?string $navigationLabel='المحافظات';
-    protected static bool $shouldRegisterNavigation=false;
+    // protected static ?string $model = City::class;
+    // protected static ?string $navigationLabel='المحافظات';
+    // protected static ?string $navigationGroup = 'المواقع&المدن';
+
+    // protected static bool $shouldRegisterNavigation=false;
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
     public static function form(Form $form): Form
     {
@@ -28,7 +30,6 @@ class CityResource extends Resource
                                       
             ]);
     }
-
     public static function table(Table $table): Table
     {
         return $table

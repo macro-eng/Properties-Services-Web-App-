@@ -56,10 +56,21 @@ class OwnerForm extends Component
     public $district;
     public $citychange;
     protected $listeners = ["updateCoordinates"];
+    public $step=1;
     public function updateCoordinates($altitude, $longitude){
         $this->altitude = $altitude;
         $this->longitude = $longitude;
         
+    }
+    public function nextStep(){
+        if($this->step<3){
+            $this->step++;
+        }
+    }
+    public function previousStep(){
+        if($this->step > 1){
+            $this->step--;
+        }
     }
     // protected $rules =[
     //        'property.name'=>"required|string",
@@ -76,7 +87,17 @@ class OwnerForm extends Component
 
           
     // ];
-  
+    public function formatNumberShort($number):string{
+        if($number >= 1_000_000_000){
+            return round($number /1_000_000_000,1 ).'B';
+
+        }elseif($number >=1_000_000){
+        return round($number /1_000_000,1 ).'M';
+        }elseif($number >=1_000){
+        return round($number /1_000,1 ).'K';      
+        }
+        return number_format($number);
+    }
     public function save(){
         // $this->validate();
         // $this->save();
@@ -128,6 +149,22 @@ class OwnerForm extends Component
 
         
     }
+    public function property(){
+        return view('livewire.owner.properties')
+        ->layout("layouts.app",["title"=>"Properties"]);
+    } 
+    public function dashboard(){
+        return view('livewire.owner.dashboard')
+        ->layout("layouts.app",["title"=>"Dashboard"]);
+    }  
+     public function bookings(){
+        return view('livewire.owner.bookings')
+        ->layout("layouts.app",["title"=>"Dashboard"]);
+    }  
+    public function profile(){
+        return view('livewire.owner.profile')
+        ->layout("layouts.app",["title"=>"Dashboard"]);
+    }
     public function render()
       
     { 
@@ -149,25 +186,25 @@ class OwnerForm extends Component
             $this->citychange = $this->city;
          }
          
-        //  if($this->type === 'apartments'){
-        //    $this->apartments = true;
-        //    $this->room = false;
-        //    $this->villa = false;
+         if($this->type === 'apartments'){
+           $this->apartments = true;
+           $this->room = false;
+           $this->villa = false;
 
-        // }if($this->area){
-        //     $this->message =$this->area;
+        }if($this->area){
+            $this->message =$this->area;
             
-        //  }
-        // else if($this->type === "villa"){
-        //     $this->villa = true;
-        //     $this->apartments = false;
-        //     $this->room = false;
-        //  }
-        //  else if($this->type === 'room'){
-        //     $this->villa = false;
-        //     $this->apartments = false;
-        //     $this->room = true;
-        //  }
+         }
+        else if($this->type === "villa"){
+            $this->villa = true;
+            $this->apartments = false;
+            $this->room = false;
+         }
+         else if($this->type === 'room'){
+            $this->villa = false;
+            $this->apartments = false;
+            $this->room = true;
+         }
          $districts = $filters->all();
          $streets = $filterstreet->all();
         $v =$this->villa;
@@ -180,11 +217,11 @@ class OwnerForm extends Component
         }
 
 
-        $m =$this->submitted ;
+        $m = $this->type;
         $this->alart = false;
         $f = $this->alart;
         
-        return view('livewire.property.owner-form',
+        return view('livewire.property.property-wizard.wizard',
         compact('messag','v','a','r','m','f','cities','districts',"streets"))
         ->layout("layouts.app",["title"=>"From"]);
     }

@@ -23,9 +23,13 @@ use Filament\Tables\Columns\TextColumn;
 class StreetResource extends Resource
 {
     protected static ?string $model = Street::class;
-
+    // protected static ?string $navigationGroup = 'المواقع&المدن';
+    protected static ?string $navigationLabel="الشوارع";
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
+    // protected static bool $shouldRegisterNavigation=false;
+    // public static function getNavigationBadge():string{
+    //     return static::getModel()::count();
+    // }
     public static function form(Form $form): Form
     {
         return $form

@@ -15,13 +15,12 @@ class District extends Model
     // public function User(){
     //     return $this->hasOne(User::class);
     //  }
+
      public function city(){
         return $this->belongsTo(City::class);
      }
  
-     public function apartment(){
-      return $this->hasManyThrough(apartmentDetails::class,Property::class);
-   }
+
      public function streets(){
       return $this->hasMany(Street::Class);
    }

@@ -7,9 +7,10 @@ class City extends Model
     protected $fillable =[
         "name"
     ];
-    public function property(){
+    public function streets(){
         return $this->HasManyThrough(Street::class,District::class);
     } 
+
     public function district(){
         return $this->hasMany(District::class);
     }

@@ -36,33 +36,58 @@
 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
     @forelse($properties as $property)
     
-    <div class="bg-white shadow-md rounded overflow-hidden border hover:shadow-lg transition">
+    <div class="bg-white shadow-md rounded overflow-hidden border hover:shadow-lg h-52 transition">
         <a href="/property/{{ $property->id }} ">
             @if($property->primary_path)
-            <img src="{{ asset('storage/'.$property->primary_path)}}"  class="w-full h-48 object-cover" />
+            <img src="{{ asset('storage/'.$property->primary_path)}}"  class="w-full h-32 object-cover" />
             @else
-            <img src="{{asset('imgs/me.jpg')}}"  class="w-full h-48 object-cover" />
+            <img src="{{asset('imgs/me.jpg')}}"  class="w-full h-32 object-cover" />
             @endif
             <div class="p-4">
                 
-                <h2 class="text-xl text-gray-800 font-bold mb-1">{{ $property->name }}</h2>
-                <h2 class="text-xl text-gray-800 font-bold mb-1">{{ $property->primary_path }}</h2>
-                    <div>
+                <h2 class="text-xl text-gray-800 font-bold text-center mb-1">{{ $property->name }}</h2>
+                    <div class="flex justify-between items-center px-4 text-sm text-gray-600 mb-2">
+                        <div>
+                        </p class="text-md font-bold text-gray-600 mb-1">
+                        <i class="fas fa-location-dot text-blue-400 mr-1"></i>
+                        {{ $property->street->district->city->name ?? "غير معروف" }}</p>
+                        </div>
+                        <div>
 
-                    </div class="flex justify-between text-sm text-gray-600 mb-2">
-                    
-                </p class="text-sm text-gray-600 mb-1">
-                <i class="fas fa-location-dot text-blue-400 mr-1"></i>
-                {{ $property->district->name ?? "غير معروف" }}</p>
-                <p class="text-sm text-gray-600 mb-1"> 
-                    <i class="fas fa-tags text-yellow-500 mr-1"></i>
-                    {{ $property->type }}<p>
-                    </div>
-                    <p class="text-green-700 font-bold text-sm mb-3">
-                        <i class="fas fa-dollar-sign mr-1"></i>
-                        {{ $property->price }}</p>
-                    </a>
-                    
+                            <p class="text-md font-bold text-gray-600 mb-1"> 
+                                <i class="fas fa-tags text-yellow-500 mr-1"></i>
+                                {{ ($property->type==="apartment" ? ("شقة") : ($property->type==="villa"? ("فيلا") : ($property->type==="room" ?("غرفة"):("مبنئ")))) }}
+                            <p>
+                        </div>
+                    </div >
+
+
+           
+                        </div>
+                            <div class="flex justify-between items-center px-6 text-sm border ring-2 ring-pink-300   text-gray-600 mb-2">
+                        <div>
+                            <p class="text-green-700 font-bold text-sm mb-3">
+                                <i class="fas fa-dollar-sign mr-1"></i>
+                                {{ $this->formatNumberShort($property->price) }}
+                            </p>
+                        </div>
+                        <div>
+                            
+                            <p class="text-sm text-gray-600 mb-1"> 
+                                <i class="{{ ($property->status=== 'available' ? ' fas fa-check-circle ': ($property->status==='pendding' ? 'fas fa-hourglass-empty ':'fas fa-lock')) }}  text-yellow-500 mr-1"></i>
+                                {{ ($property->status==="available" ? ("متاح") : ($property->status==="pendding"? ("قيد الانتظار") :( "محجوز"))) }}
+                                <p>
+                        </div>
+                        </div >
+                        <div class="flex flex-cols-1 items-center px-6 text-sm text-gray-600 mb-2">
+                        <div>
+                            </p class="text-md font-bold text-gray-600 mb-1">
+                            <i class="fas fa-location-dot text-blue-400 mr-1"></i>
+                            {{ $property->street->title ?? "غير معروف" }}</p>
+                        </div>
+                        </div>
+                        </a>
+                        
                     <a class="block bg-blue-600 hover:bg-blue-700 text-white text-sm px-4 py-2 text-center rounded"
                     >
                     <i class="fas fa-eye mr-1"></i>

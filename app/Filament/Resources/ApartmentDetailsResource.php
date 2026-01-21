@@ -25,10 +25,19 @@ class ApartmentDetailsResource extends Resource
 {
     protected static ?string $model = ApartmentDetails::class;
     protected static ?string $modelLabel='شقق';
-    protected static ?string $navigationLabel='شقق';
+    // protected static ?string $navigationGroup="العقارات";
+    // protected static ?string $navigationParentItem='الشقق';
+
+    // protected static ?string $navigationParentItem='العقارات';
+
+    // protected static bool $shouldRegisterNavigation=false;
+    // protected static ?string $navigationLabel='شقق';
+
     
     protected static ?string $navigationIcon = 'heroicon-o-home-modern';
-
+//   public static function getNavigationBadge():string{
+//         return static::getModel()::count();
+//     }
     public static function form(Form $form): Form
     {
         return $form
